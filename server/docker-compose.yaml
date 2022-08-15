@@ -1,0 +1,15 @@
+services:
+  square_hotel_db:
+    container_name: square_hotel_db
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${PG_PWD}
+    ports:
+      - 5432:5432
+    volumes:
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - 'pg_data:/data/db'
+
+volumes:
+  pg_data:
