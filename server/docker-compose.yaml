@@ -1,15 +1,15 @@
 services:
-  square_hotel_db:
-    container_name: square_hotel_db
-    image: postgres:14
+  mongo:
+    container_name: mongo_db
+    image: mongo
     restart: always
-    environment:
-      POSTGRES_PASSWORD: ${PG_PWD}
     ports:
-      - 5432:5432
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
     volumes:
-      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - 'pg_data:/data/db'
+      - 'mongo_data:/data/db'
 
 volumes:
-  pg_data:
+  mongo_data:

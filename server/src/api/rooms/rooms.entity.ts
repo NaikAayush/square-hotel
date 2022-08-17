@@ -1,56 +1,56 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+// import {
+//   Entity,
+//   PrimaryGeneratedColumn,
+//   Column,
+//   CreateDateColumn,
+//   UpdateDateColumn,
+// } from 'typeorm';
 
-@Entity()
-export class Rooms {
-  @PrimaryGeneratedColumn()
-  public id!: number;
+// @Entity()
+// export class Rooms {
+//   @PrimaryGeneratedColumn()
+//   public id!: number;
 
-  @Column()
-  public name: string;
+//   @Column()
+//   public name: string;
 
-  @Column()
-  public units: number;
+//   @Column()
+//   public units: number;
 
-  @Column()
-  public maxGuests: number;
+//   @Column()
+//   public maxGuests: number;
 
-  @Column()
-  public maxKids: number;
+//   @Column()
+//   public maxKids: number;
 
-  @Column()
-  public roomSize: number;
+//   @Column()
+//   public roomSize: number;
 
-  @Column()
-  public bedType: string;
+//   @Column()
+//   public bedType: string;
 
-  @Column()
-  public npOfBeds: number;
+//   @Column()
+//   public npOfBeds: number;
 
-  @Column()
-  public amenities: string;
+//   @Column()
+//   public amenities: string;
 
-  @Column({ array: true })
-  public photos: string;
+//   @Column({ array: true })
+//   public photos: string;
 
-  @Column()
-  public description: string;
+//   @Column()
+//   public description: string;
 
-  @Column()
-  public price: number;
+//   @Column()
+//   public price: number;
 
-  /*
-   * Create and Update Date Columns
-   */
+//   /*
+//    * Create and Update Date Columns
+//    */
 
-  @CreateDateColumn({ type: 'timestamp' })
-  public createdAt!: Date;
+//   @CreateDateColumn({ type: 'timestamp' })
+//   public createdAt!: Date;
 
-  @UpdateDateColumn({ type: 'timestamp' })
-  public updatedAt!: Date;
-}
+//   @UpdateDateColumn({ type: 'timestamp' })
+//   public updatedAt!: Date;
+// }
