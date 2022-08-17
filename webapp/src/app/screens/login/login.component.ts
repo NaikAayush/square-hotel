@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Md5 } from 'ts-md5';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +11,7 @@ import { Md5 } from 'ts-md5';
 })
 export class LoginComponent implements OnInit {
   url: string;
-  constructor() {
+  constructor(public auth: AngularFireAuth) {
     const state = Md5.hashStr(Date.now().toString());
     this.url =
       environment.squareBasePath +
@@ -20,5 +22,14 @@ export class LoginComponent implements OnInit {
       state;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.auth.user);
+  }
+
+  login() {
+    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  }
+  logout() {
+    this.auth.signOut();
+  }
 }
