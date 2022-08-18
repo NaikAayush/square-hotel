@@ -12,9 +12,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './screens/login/login.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { OnboardingComponent } from './screens/onboarding/onboarding.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, LoaderComponent, OnboardingComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    LoaderComponent,
+    OnboardingComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -23,7 +29,7 @@ import { OnboardingComponent } from './screens/onboarding/onboarding.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
