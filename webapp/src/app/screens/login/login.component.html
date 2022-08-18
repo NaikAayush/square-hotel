@@ -33,7 +33,7 @@
         <div class="flex flex-row gap-4 justify-center">
           <button
             routerLink="dashboard"
-            class="inline-flex justify-center items-center py-3 px-5 border border-transparent rounded-md shadow-sm bg-indigo-600 hover:bg-indigo-700 text-sm font-medium text-white gap-4"
+            class="inline-flex justify-center items-center py-3 px-5 border border-transparent rounded-xl shadow-sm bg-indigo-600 hover:bg-indigo-700 text-sm font-medium text-white gap-4"
           >
             <span class="sr-only">Continue to Dashboard</span>
             <span class="text-base font-semibold">Continue to Dashboard</span>
@@ -41,7 +41,7 @@
 
           <button
             (click)="authService.logout()"
-            class="inline-flex justify-center items-center py-3 px-5 border border-transparent rounded-md shadow-sm text-indigo-700 bg-indigo-100 hover:bg-indigo-200 text-sm font-medium gap-4"
+            class="inline-flex justify-center items-center py-3 px-5 border border-transparent rounded-xl shadow-sm text-indigo-700 bg-indigo-100 hover:bg-indigo-200 text-sm font-medium gap-4"
           >
             <span class="sr-only">Continue to Dashboard</span>
             <span class="text-base font-semibold">Log Out</span>
@@ -53,7 +53,7 @@
       <div class="flex flex-col gap-4 w-full items-center justify-center">
         <button
           (click)="authService.login()"
-          class="inline-flex justify-center items-center py-3 px-5 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 gap-4"
+          class="inline-flex justify-center items-center py-3 px-5 border border-gray-300 rounded-xl shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 gap-4"
         >
           <span class="sr-only">Login with Google</span>
           <img class="w-5 h-5" src="assets/logos/google.svg" alt="" />
