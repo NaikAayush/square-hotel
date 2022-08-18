@@ -3,6 +3,9 @@ import { environment } from 'src/environments/environment';
 import { Md5 } from 'ts-md5';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
+import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/api/user.service';
+import { User } from 'src/app/schema/user.schema';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +14,11 @@ import firebase from 'firebase/compat/app';
 })
 export class LoginComponent implements OnInit {
   url: string;
-  constructor(public auth: AngularFireAuth) {
+  constructor(
+    public auth: AngularFireAuth,
+    public authService: AuthService,
+    private userService: UserService
+  ) {
     const state = Md5.hashStr(Date.now().toString());
     this.url =
       environment.squareBasePath +
@@ -26,8 +33,20 @@ export class LoginComponent implements OnInit {
     console.log(this.auth.user);
   }
 
-  login() {
-    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  async login(): Promise<any> {
+    const credential = await this.auth.signInWithPopup(
+      new firebase.auth.GoogleAuthProvider()
+    );
+    if (credential.user != null) {
+      const user: firebase.User = credential.user;
+      if (user.email != null) {
+        const data: User = {
+          _id: user.uid,
+          email: user.email,
+        };
+        return await this.userService.createUser(data);
+      }
+    }
   }
   logout() {
     this.auth.signOut();
