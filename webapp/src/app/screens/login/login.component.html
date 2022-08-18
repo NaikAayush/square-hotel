@@ -1,6 +1,3 @@
-<div *ngIf="authService.user$ | async as user">
-  {{ user }}
-</div>
 <div class="flex flex-row h-screen w-screen">
   <div class="flex flex-col w-5/12 items-center justify-center gap-8">
     <div>
@@ -18,14 +15,16 @@
 
     <div class="w-full">
       <div
-        *ngIf="auth.user | async as user; then authenticated; else showLogin"
-      >
-        <app-loader></app-loader>
-      </div>
+        *ngIf="
+          authService.afAuth.user | async as user;
+          then authenticated;
+          else showLogin
+        "
+      ></div>
     </div>
     <ng-template #authenticated>
       <div
-        *ngIf="auth.user | async as user"
+        *ngIf="authService.afAuth.user | async as user"
         class="flex flex-col gap-4 w-full items-center"
       >
         <h1 class="text-2xl font-bold">Hello {{ user.displayName }}!</h1>
@@ -39,7 +38,7 @@
           </button>
 
           <button
-            (click)="logout()"
+            (click)="authService.logout()"
             class="inline-flex justify-center items-center py-3 px-5 border border-transparent rounded-md shadow-sm text-indigo-700 bg-indigo-100 hover:bg-indigo-200 text-sm font-medium gap-4"
           >
             <span class="sr-only">Continue to Dashboard</span>
@@ -51,7 +50,7 @@
     <ng-template #showLogin class="w-full">
       <div class="flex flex-col gap-4 w-full items-center justify-center">
         <button
-          (click)="login()"
+          (click)="authService.login()"
           class="inline-flex justify-center items-center py-3 px-5 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 gap-4"
         >
           <span class="sr-only">Login with Google</span>
@@ -71,12 +70,4 @@
     />
   </div>
 </div>
-
-<!-- <div *ngIf="auth.user | async as user; else showLogin">
-  <h1>Hello {{ user.displayName }}!</h1>
-  <button (click)="logout()">Logout</button>
-</div>
-<ng-template #showLogin>
-  <p>Please login.</p>
-  <button (click)="login()">Login with Google</button>
-</ng-template> -->
+<app-loader @closeAnimation *ngIf="loading || authService.loading"></app-loader>

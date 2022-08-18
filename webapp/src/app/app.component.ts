@@ -10,7 +10,5 @@ export class AppComponent implements OnInit {
   title = 'webapp';
 
   constructor(private authService: AuthService) {}
-  ngOnInit() {
-    console.log(this.authService.user$);
-  }
+  ngOnInit() {}
 }
