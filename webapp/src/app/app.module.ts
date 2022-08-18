@@ -11,9 +11,10 @@ import { environment } from 'src/environments/environment';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './screens/login/login.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { OnboardingComponent } from './screens/onboarding/onboarding.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, LoaderComponent],
+  declarations: [AppComponent, LoginComponent, LoaderComponent, OnboardingComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
