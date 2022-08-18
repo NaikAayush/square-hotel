@@ -1,10 +1,10 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+// import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateRoomDto {
-  @IsString()
-  @IsNotEmpty()
-  public name: string;
+// export class CreateRoomDto {
+//   @IsString()
+//   @IsNotEmpty()
+//   public name: string;
 
-  @IsNotEmpty()
-  public units: number;
-}
+//   @IsNotEmpty()
+//   public units: number;
+// }

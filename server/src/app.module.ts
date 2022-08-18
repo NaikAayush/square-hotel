@@ -1,21 +1,22 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { getEnvPath } from './common/helper/env.helper';
 import { RoomsModule } from './api/rooms/rooms.module';
-import { TypeOrmConfigService } from './shared/typeorm/typeorm.service';
-
-const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
+import { OauthController } from './api/oauth/oauth.controller';
+import { OauthModule } from './api/oauth/oauth.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { UserModule } from './api/user/user.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath, isGlobal: true }),
-    TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot(process.env.MONGO_URL),
     RoomsModule,
+    OauthModule,
+    UserModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, OauthController],
   providers: [AppService],
 })
 export class AppModule {}

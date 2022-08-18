@@ -1,1 +1,0 @@
-CREATE DATABASE square_hotel;
