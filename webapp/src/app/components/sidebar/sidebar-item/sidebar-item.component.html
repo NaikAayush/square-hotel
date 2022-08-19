@@ -1,0 +1,16 @@
+<button
+  [routerLinkActive]="style"
+  class="flex flex-row w-full py-3 px-5 h-min hover:bg-slate-100 rounded-xl gap-4 items-center font-semibold"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-7 w-7"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    stroke-width="2"
+  >
+    <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="svg" />
+  </svg>
+  <span class="text-lg">{{ name }}</span>
+</button>

@@ -19,6 +19,11 @@ import { WarningBadgeComponent } from './components/badge/warning-badge/warning-
 import { BadgeComponent } from './components/badge/badge.component';
 import { FormsModule } from '@angular/forms';
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { SidebarItemComponent } from './components/sidebar/sidebar-item/sidebar-item.component';
+import { RoomsComponent } from './screens/dashboard/rooms/rooms.component';
+import { OverviewComponent } from './screens/dashboard/overview/overview.component';
+import { AppTitleComponent } from './components/app-title/app-title.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +36,11 @@ import { DashboardComponent } from './screens/dashboard/dashboard.component';
     WarningBadgeComponent,
     BadgeComponent,
     DashboardComponent,
+    SidebarComponent,
+    SidebarItemComponent,
+    RoomsComponent,
+    OverviewComponent,
+    AppTitleComponent,
   ],
   imports: [
     BrowserModule,

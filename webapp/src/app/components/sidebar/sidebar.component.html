@@ -1,0 +1,11 @@
+<div class="flex flex-col w-72 h-full bg-white rounded-3xl p-4 gap-4">
+  <div *ngFor="let route of routes" class="flex flex-col">
+    <app-sidebar-item
+      [routerLink]="route.route"
+      routerLinkActive="active-link"
+      class="w-full"
+      [name]="route.name"
+      [svg]="route.svg"
+    ></app-sidebar-item>
+  </div>
+</div>

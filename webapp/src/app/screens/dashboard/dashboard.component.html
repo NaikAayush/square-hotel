@@ -1,1 +1,11 @@
-<app-loader *ngIf="loading"></app-loader>
+<div
+  class="flex flex-row h-screen w-scren bg-gradient-to-r from-gray-100 to-gray-200 p-6 gap-8"
+>
+  <app-sidebar></app-sidebar>
+  <div class="flex flex-row h-full w-max p-4">
+    <router-outlet></router-outlet>
+    <!-- <h1 class="text-4xl font-bold text-gray-700">Dashboard</h1> -->
+  </div>
+</div>
+
+<!-- <app-loader *ngIf="loading"></app-loader> -->
