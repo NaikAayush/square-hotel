@@ -9,6 +9,7 @@ import { UserService } from './api/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  uid: string;
   loading = false;
 
   constructor(

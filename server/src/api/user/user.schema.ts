@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Square } from './dto/create-user.dto';
 
 export type UserDocument = User & Document;
 
@@ -16,6 +17,9 @@ export class User {
 
   @Prop()
   displayName: string;
+
+  @Prop({ type: Object })
+  square: Square;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

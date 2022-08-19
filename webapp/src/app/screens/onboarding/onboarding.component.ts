@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { OauthService } from 'src/app/services/api/oauth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { Md5 } from 'ts-md5';
 
@@ -14,11 +16,14 @@ export class OnboardingComponent implements OnInit {
   code: string;
   response_type: string;
   state: string;
+  loading: boolean;
 
   constructor(
     private cookieService: CookieService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public authService: AuthService,
+    private oAuthService: OauthService
   ) {
     const state = Md5.hashStr(Date.now().toString());
     this.url =
@@ -31,15 +36,26 @@ export class OnboardingComponent implements OnInit {
     this.cookieService.set('Auth_State', state, Date.now() + 300000);
   }
 
-  ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-      console.log(params);
-      this.code = params['code'];
-      this.response_type = params['response_type'];
-      this.state = params['state'];
-      console.log(this.code, this.response_type, this.state);
-      if (params['code']) {
-        console.log('yeet');
+  async ngOnInit() {
+    this.authService.afAuth.onAuthStateChanged((user) => {
+      this.loading = false;
+      if (user) {
+        this.route.queryParams.subscribe(async (params) => {
+          console.log(params);
+          this.code = params['code'];
+          this.response_type = params['response_type'];
+          this.state = params['state'];
+          console.log(this.code, this.response_type, this.state);
+          if (params['code']) {
+            const userResponse = await this.oAuthService.callback(user.uid, {
+              code: params['code'],
+              response_type: params['response_type'],
+            });
+            console.log('yeet', userResponse);
+          }
+        });
+      } else {
+        // No user is signed in.
       }
     });
   }
