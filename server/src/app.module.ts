@@ -16,7 +16,7 @@ import { UserModule } from './api/user/user.module';
     OauthModule,
     UserModule,
   ],
-  controllers: [AppController, OauthController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

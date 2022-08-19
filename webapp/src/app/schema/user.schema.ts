@@ -3,4 +3,14 @@ export interface User {
   email: string;
   photoURL?: string;
   displayName?: string;
+  square?: Square;
+  hotelName?: string;
+  domain?: string;
+}
+
+export interface Square {
+  accessToken?: string;
+  refreshToken?: string;
+  expiresAt?: string;
+  merchantId?: string;
 }
