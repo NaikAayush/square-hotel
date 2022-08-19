@@ -14,7 +14,8 @@ export class AuthService {
 
   constructor(
     public afAuth: AngularFireAuth,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {}
 
   async login(): Promise<any> {
@@ -36,5 +37,6 @@ export class AuthService {
   }
   logout() {
     this.afAuth.signOut();
+    this.router.navigate(['']);
   }
 }

@@ -1,11 +1,44 @@
-<div class="flex flex-col w-72 h-full bg-white rounded-3xl p-4 gap-4">
-  <div *ngFor="let route of routes" class="flex flex-col">
-    <app-sidebar-item
-      [routerLink]="route.route"
-      routerLinkActive="active-link"
-      class="w-full"
-      [name]="route.name"
-      [svg]="route.svg"
-    ></app-sidebar-item>
+<div
+  class="flex flex-col w-72 h-full bg-white rounded-3xl p-6 gap-4 justify-between"
+>
+  <div class="flex w-full items-center justify-center gap-2">
+    <img src="assets/logos/square-black.svg" alt="" class="inline h-8" />
+    <span class="inline text-3xl text-black font-bold">Hotels</span>
+  </div>
+  <div class="flex flex-col gap-4">
+    <div *ngFor="let route of routes" class="flex flex-col">
+      <app-sidebar-item
+        [routerLink]="route.route"
+        routerLinkActive="active-link"
+        class="w-full"
+        [name]="route.name"
+        [svg]="route.svg"
+      ></app-sidebar-item>
+    </div>
+  </div>
+  <div class="flex flex-row items-center justify-between">
+    <div class="flex flex-row items-center gap-4">
+      <img class="h-8 rounded-full" [src]="photoURL" alt="" />
+      <div class="text-lg font-semibold">{{ name }}</div>
+    </div>
+    <button
+      (click)="authService.logout()"
+      class="bg-slate-50 hover:bg-slate-100 p-3 rounded-xl"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+        />
+      </svg>
+    </button>
   </div>
 </div>

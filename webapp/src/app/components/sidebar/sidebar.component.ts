@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { RoutesArray } from 'src/app/schema/routes-array.schema';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,7 +8,10 @@ import { RoutesArray } from 'src/app/schema/routes-array.schema';
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
-  constructor() {}
+  @Input() name: string;
+  @Input() photoURL: string;
+
+  constructor(public authService: AuthService) {}
 
   ngOnInit(): void {}
 

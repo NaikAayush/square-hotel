@@ -12,7 +12,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class DashboardComponent implements OnInit {
   uid: string;
   loading = false;
-
+  name: string;
+  photoURL: string;
   constructor(
     private router: Router,
     public authService: AuthService,
@@ -24,6 +25,8 @@ export class DashboardComponent implements OnInit {
     this.authService.afAuth.onAuthStateChanged(async (user) => {
       if (user) {
         this.uid = user.uid;
+        this.name = user.displayName;
+        this.photoURL = user.photoURL;
         const userData: User = await this.userService.getUser(user.uid);
         if (userData.square && userData.hotelName && userData.domain) {
           this.loading = false;
