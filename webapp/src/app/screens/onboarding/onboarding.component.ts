@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { User } from 'src/app/schema/user.schema';
 import { OauthService } from 'src/app/services/api/oauth.service';
+import { UserService } from 'src/app/services/api/user.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { Md5 } from 'ts-md5';
@@ -16,13 +18,21 @@ export class OnboardingComponent implements OnInit {
   code: string;
   response_type: string;
   state: string;
-  loading: boolean;
+  loading: boolean = false;
+  square_connected = 'warning';
+  square_hotel_name = 'warning';
+  square_domain_configured = 'warning';
+  hotelName = '';
+  domain = '';
+  onboarded = false;
+  uid: string;
 
   constructor(
     private cookieService: CookieService,
     private router: Router,
     private route: ActivatedRoute,
     public authService: AuthService,
+    private userService: UserService,
     private oAuthService: OauthService
   ) {
     const state = Md5.hashStr(Date.now().toString());
@@ -37,9 +47,26 @@ export class OnboardingComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.authService.afAuth.onAuthStateChanged((user) => {
-      this.loading = false;
+    this.loading = true;
+    this.authService.afAuth.onAuthStateChanged(async (user) => {
       if (user) {
+        this.uid = user.uid;
+        const userData: User = await this.userService.getUser(user.uid);
+
+        if (userData.square) {
+          this.square_connected = 'success';
+        }
+        if (userData.hotelName) {
+          this.hotelName = userData.hotelName;
+          this.square_hotel_name = 'success';
+        }
+        if (userData.domain) {
+          this.domain = userData.domain;
+          this.square_domain_configured = 'success';
+        }
+        this.checkStatus(userData);
+
+        this.loading = false;
         this.route.queryParams.subscribe(async (params) => {
           console.log(params);
           this.code = params['code'];
@@ -51,12 +78,45 @@ export class OnboardingComponent implements OnInit {
               code: params['code'],
               response_type: params['response_type'],
             });
-            console.log('yeet', userResponse);
+            this.router.navigate(['onboarding']);
           }
         });
       } else {
         // No user is signed in.
       }
     });
+  }
+
+  checkStatus(userData: User) {
+    if (userData.square && userData.hotelName && userData.domain) {
+      console.log('enabled');
+      this.onboarded = true;
+    }
+  }
+
+  async saveHotel() {
+    this.loading = true;
+    const hotelRes: any = await this.userService.updateUser(
+      this.uid,
+      'hotelName',
+      this.hotelName
+    );
+    this.checkStatus(hotelRes['hotelName']);
+    this.square_hotel_name = 'success';
+    this.loading = false;
+    console.log(hotelRes);
+  }
+
+  async saveDomain() {
+    this.loading = true;
+    const hotelRes: any = await this.userService.updateUser(
+      this.uid,
+      'domain',
+      this.domain
+    );
+    this.checkStatus(hotelRes['existingUser']);
+    this.square_domain_configured = 'success';
+    this.loading = false;
+    console.log(hotelRes);
   }
 }

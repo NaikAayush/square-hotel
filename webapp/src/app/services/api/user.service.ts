@@ -15,9 +15,15 @@ export class UserService {
       .toPromise();
   }
 
-  async getUser(id: string) {
+  async updateUser(id: string, key: string, value: string) {
     return await this.httpService
-      .get(`${environment.apiUrl}/user/${id}`)
+      .put(`${environment.apiUrl}/user/${id}`, { [key]: value })
+      .toPromise();
+  }
+
+  async getUser(id: string): Promise<User> {
+    return await this.httpService
+      .get<User>(`${environment.apiUrl}/user/${id}`)
       .toPromise();
   }
 }

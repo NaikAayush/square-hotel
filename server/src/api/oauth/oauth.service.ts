@@ -33,7 +33,6 @@ export class OauthService {
       clientSecret: process.env.SQ_APPLICATION_SECRET,
       grantType: 'authorization_code',
     });
-
     let { accessToken, refreshToken, expiresAt, merchantId } = result;
 
     return await this.userService.update(uid, {

@@ -38,65 +38,43 @@
           </a>
         </div>
       </div>
-      <div class="text-green-400">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-24 w-24"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-            clip-rule="evenodd"
-          />
-        </svg>
-      </div>
+      <app-badge class="h-24 w-24" [type]="square_connected"></app-badge>
     </div>
 
     <div
-      class="flex flex-row w-full max-w-5xl bg-white p-12 rounded-3xl items-center"
+      class="flex flex-row w-full max-w-5xl bg-white p-12 rounded-3xl items-center gap-24"
     >
       <div class="flex flex-col w-full gap-4">
         <span class="block text-3xl font-bold text-gray-900">
           Name your Hotel
         </span>
-        <div class="">
-          <input
-            type="email"
-            name="email"
-            id="email"
-            class="w-1/2 py-3 px-5 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block text-base border-gray-300 rounded-xl font-medium"
-            placeholder="The Pearl Hotel"
-          />
-        </div>
-        <div>
-          <button
-            class="inline-flex justify-center items-center py-3 px-5 border border-gray-300 rounded-xl shadow-sm text-sm font-medium gap-4 bg-indigo-600 hover:bg-indigo-700"
-          >
-            <span class="sr-only">Save</span>
-            <span class="text-base font-semibold text-white">Save</span>
-          </button>
+        <div class="flex flex-row gap-4 w-full">
+          <div class="w-full">
+            <input
+              [(ngModel)]="hotelName"
+              type="email"
+              name="email"
+              id="email"
+              class="w-full block py-3 px-5 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-base border-gray-300 rounded-xl font-medium"
+              placeholder="The Pearl Hotel"
+            />
+          </div>
+          <div>
+            <button
+              (click)="saveHotel()"
+              class="inline-flex justify-center items-center py-3 px-5 border border-gray-300 rounded-xl shadow-sm text-sm font-medium gap-4 bg-indigo-600 hover:bg-indigo-700"
+            >
+              <span class="sr-only">Save</span>
+              <span class="text-base font-semibold text-white">Save</span>
+            </button>
+          </div>
         </div>
       </div>
-      <div class="text-green-400">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-24 w-24"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-            clip-rule="evenodd"
-          />
-        </svg>
-      </div>
+      <app-badge class="h-24 w-24" [type]="square_hotel_name"></app-badge>
     </div>
 
     <div
-      class="flex flex-row w-full max-w-5xl bg-white p-12 rounded-3xl items-center"
+      class="flex flex-row w-full max-w-5xl bg-white p-12 rounded-3xl items-center gap-24"
     >
       <div class="flex flex-col w-full gap-4">
         <span class="block text-3xl font-bold text-gray-900">
@@ -105,44 +83,51 @@
         <span class="text-lg font-medium text-gray-600">
           Support for custom domains coming soon.
         </span>
-        <div class="mt-1 flex rounded-md shadow-sm w-1/2">
-          <input
-            type="text"
-            name="company-website"
-            id="company-website"
-            class="min-w-0 w-full py-3 px-5 rounded-none rounded-l-xl focus:ring-indigo-500 focus:border-indigo-500 text-base border-gray-300 focus-within:z-10 font-medium"
-            placeholder="thepearl"
-          />
-          <span
-            class="flex-1 inline-flex items-center px-3 rounded-r-xl border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-base font-semibold"
-          >
-            .squarehotels.me
-          </span>
-        </div>
+        <div class="flex flex-row gap-4 w-full">
+          <div class="flex rounded-md shadow-sm w-full">
+            <input
+              [(ngModel)]="domain"
+              type="text"
+              name="company-website"
+              id="company-website"
+              class="min-w-0 w-full py-3 px-5 rounded-none rounded-l-xl focus:ring-indigo-500 focus:border-indigo-500 text-base border-gray-300 focus-within:z-10 font-medium"
+              placeholder="thepearl"
+            />
+            <span
+              class="flex-1 inline-flex items-center px-3 rounded-r-xl border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-base font-semibold"
+            >
+              .squarehotels.me
+            </span>
+          </div>
 
-        <div>
-          <button
-            class="inline-flex justify-center items-center py-3 px-5 border border-gray-300 rounded-xl shadow-sm text-sm font-medium gap-4 bg-indigo-600 hover:bg-indigo-700"
-          >
-            <span class="sr-only">Save</span>
-            <span class="text-base font-semibold text-white">Save</span>
-          </button>
+          <div>
+            <button
+              (click)="saveDomain()"
+              class="inline-flex justify-center items-center py-3 px-5 border border-gray-300 rounded-xl shadow-sm text-sm font-medium gap-4 bg-indigo-600 hover:bg-indigo-700"
+            >
+              <span class="sr-only">Save</span>
+              <span class="text-base font-semibold text-white">Save</span>
+            </button>
+          </div>
         </div>
       </div>
-      <div class="text-green-400">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-24 w-24"
-          viewBox="0 0 20 20"
-          fill="currentColor"
+      <app-badge
+        class="h-24 w-24"
+        [type]="square_domain_configured"
+      ></app-badge>
+    </div>
+    <div class="flex w-full max-w-5xl justify-end">
+      <button
+        [disabled]="!onboarded"
+        routerLink="/dashboard"
+        class="inline-flex justify-center items-center py-3 px-5 border border-gray-300 rounded-xl shadow-sm text-sm font-medium gap-4 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:hover:bg-indigo-600 disabled:cursor-not-allowed"
+      >
+        <span class="sr-only">Proceed to Dashboard</span>
+        <span class="text-base font-semibold text-white"
+          >Proceed to Dashboard</span
         >
-          <path
-            fill-rule="evenodd"
-            d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-            clip-rule="evenodd"
-          />
-        </svg>
-      </div>
+      </button>
     </div>
   </div>
 </div>
+<app-loader *ngIf="loading"></app-loader>

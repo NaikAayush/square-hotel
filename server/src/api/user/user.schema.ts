@@ -20,6 +20,12 @@ export class User {
 
   @Prop({ type: Object })
   square: Square;
+
+  @Prop()
+  hotelName: string;
+
+  @Prop()
+  domain: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
