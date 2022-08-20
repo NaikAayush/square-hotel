@@ -24,6 +24,8 @@ import { SidebarItemComponent } from './components/sidebar/sidebar-item/sidebar-
 import { RoomsComponent } from './screens/dashboard/rooms/rooms.component';
 import { OverviewComponent } from './screens/dashboard/overview/overview.component';
 import { AppTitleComponent } from './components/app-title/app-title.component';
+import { RoomItemComponent } from './components/room-item/room-item.component';
+import { RoomAddComponent } from './components/room-add/room-add.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { AppTitleComponent } from './components/app-title/app-title.component';
     RoomsComponent,
     OverviewComponent,
     AppTitleComponent,
+    RoomItemComponent,
+    RoomAddComponent,
   ],
   imports: [
     BrowserModule,
