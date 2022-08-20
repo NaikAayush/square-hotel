@@ -6,6 +6,15 @@ name: Deploy to Firebase Hosting on merge
   push:
     branches:
       - main
+env:
+  apiUrl: ${{ secrets.APIURL }}
+  firebaseConfig: ${{ secrets.FIREBASECONFIG }}
+  squareBasePath: ${{ secrets.SQUAREBASEPATH }}
+  squareScopes: ${{ secrets.SQUARESCOPES }}
+  SQ_APPLICATION_ID: ${{ secrets.SQ_APPLICATION_ID }}
+  SQ_APPLICATION_SECRET: ${{ secrets.SQ_APPLICATION_SECRET }}
+  SQ_ENVIRONMENT: ${{ secrets.SQ_ENVIRONMENT }}
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest

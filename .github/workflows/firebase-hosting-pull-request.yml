@@ -3,6 +3,16 @@
 
 name: Deploy to Firebase Hosting on PR
 "on": pull_request
+
+env:
+  apiUrl: ${{ secrets.APIURL }}
+  firebaseConfig: ${{ secrets.FIREBASECONFIG }}
+  squareBasePath: ${{ secrets.SQUAREBASEPATH }}
+  squareScopes: ${{ secrets.SQUARESCOPES }}
+  SQ_APPLICATION_ID: ${{ secrets.SQ_APPLICATION_ID }}
+  SQ_APPLICATION_SECRET: ${{ secrets.SQ_APPLICATION_SECRET }}
+  SQ_ENVIRONMENT: ${{ secrets.SQ_ENVIRONMENT }}
+
 jobs:
   build_and_preview:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
