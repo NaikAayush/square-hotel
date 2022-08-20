@@ -88,7 +88,7 @@ export class OnboardingComponent implements OnInit {
   }
 
   checkStatus(userData: User) {
-    if (userData.square && userData.hotelName && userData.domain) {
+    if (userData?.square && userData?.hotelName && userData?.domain) {
       console.log('enabled');
       this.onboarded = true;
     }
