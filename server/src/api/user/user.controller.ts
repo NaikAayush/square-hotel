@@ -8,7 +8,7 @@ import {
   Put,
   Res,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto, Rooms } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './user.schema';
 import { UserService } from './user.service';
@@ -34,14 +34,11 @@ export class UserController {
   @Put('/:id')
   async updateUser(
     @Res() response,
-    @Param('id') studentId: string,
+    @Param('id') uid: string,
     @Body() updateUserDto: UpdateUserDto,
   ) {
     try {
-      const existingUser = await this.userService.update(
-        studentId,
-        updateUserDto,
-      );
+      const existingUser = await this.userService.update(uid, updateUserDto);
       return response.status(HttpStatus.OK).json({
         message: 'User has been successfully updated',
         existingUser,
@@ -49,5 +46,18 @@ export class UserController {
     } catch (err) {
       return response.status(err.status).json(err.response);
     }
+  }
+
+  @Put('/rooms/:id')
+  async handleRoom(
+    @Res() response,
+    @Param('id') uid: string,
+    @Body() rooms: Rooms,
+  ) {
+    const existingUser = await this.userService.updateRoom(uid, rooms);
+    return response.status(HttpStatus.OK).json({
+      message: 'Room has been successfully created',
+      existingUser,
+    });
   }
 }

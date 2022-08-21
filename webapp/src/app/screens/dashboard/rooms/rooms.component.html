@@ -1,9 +1,14 @@
 <app-app-title title="Rooms"></app-app-title>
 
-<div class="flex flex-row gap-10 pt-4">
-  <app-room-item></app-room-item>
+<div class="flex flex-row gap-10 pt-4 w-full flex-wrap justify-evenly">
+  <div class="flex flex-row flex-wrap" *ngFor="let room of user?.rooms">
+    <app-room-item [room]="room"></app-room-item>
+  </div>
+
   <button
-    (click)="handleAddRoomClick()"
+    (click)="
+      storeService.roomsAddScreenVisible = !storeService.roomsAddScreenVisible
+    "
     class="flex flex-col w-72 h-[340px] border-4 border-gray-300 border-dashed p-4 rounded-xl gap-4 hover:bg-gray-50 text-gray-400 items-center justify-center"
   >
     <svg
@@ -26,7 +31,6 @@
   </button>
 </div>
 <app-room-add
-  [@openCloseAnimation]="animationService.addRoom"
-  *ngIf="animationService.addRoom"
-  (closeEvent)="handleAddRoomClick()"
+  [@openCloseAnimation]="storeService.roomsAddScreenVisible"
+  *ngIf="storeService.roomsAddScreenVisible"
 ></app-room-add>

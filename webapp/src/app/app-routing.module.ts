@@ -9,12 +9,15 @@ import {
   AngularFireAuthGuard,
   redirectUnauthorizedTo,
 } from '@angular/fire/compat/auth-guard';
+import { RoomAddComponent } from './components/rooms/room-add/room-add.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'onboarding', component: OnboardingComponent },
+  { path: 'callback', component: OnboardingComponent },
+  { path: 'room/add', component: RoomAddComponent },
   {
     path: 'dashboard',
     redirectTo: 'dashboard/overview',

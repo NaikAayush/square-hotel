@@ -1,0 +1,287 @@
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div
+  class="relative z-10"
+  aria-labelledby="modal-title"
+  role="dialog"
+  aria-modal="true"
+>
+  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+  <div class="fixed z-10 inset-0 overflow-y-auto">
+    <div
+      class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0"
+    >
+      <div
+        class="relative bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 max-w-7xl w-full sm:p-6"
+      >
+        <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
+          <button
+            (click)="
+              storeService.roomsAddScreenVisible =
+                !storeService.roomsAddScreenVisible
+            "
+            class="bg-slate-100 hover:bg-slate-200 p-3 rounded-xl w-min text-indigo-400"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <form [formGroup]="roomForm" class="space-y-8 divide-y divide-gray-200">
+          <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
+            <div>
+              <div>
+                <h3 class="text-lg leading-6 font-bold text-gray-900">
+                  Add Room
+                </h3>
+              </div>
+              <div class="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
+                <div>
+                  <h3 class="text-lg leading-6 font-medium text-gray-900">
+                    Room Details
+                  </h3>
+                </div>
+                <div class="space-y-6 sm:space-y-5">
+                  <div
+                    class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+                  >
+                    <label
+                      for="roomName"
+                      class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                    >
+                      Name this room
+                    </label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                      <input
+                        formControlName="roomName"
+                        type="text"
+                        name="roomName"
+                        id="roomName"
+                        class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-xl py-3 px-5"
+                        placeholder="e.g. King, Deluxe, Twin Suite"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+                  >
+                    <label
+                      for="roomUnits"
+                      class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                    >
+                      Units
+                    </label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                      <input
+                        formControlName="roomUnits"
+                        type="number"
+                        name="roomUnits"
+                        id="roomUnits"
+                        class="w-28 block shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-xl py-3 px-5"
+                        min="0"
+                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+                  >
+                    <label
+                      for="roomSize"
+                      class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                    >
+                      Room Size (sqft)
+                    </label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                      <input
+                        formControlName="roomSize"
+                        type="number"
+                        name="roomSize"
+                        id="roomSize"
+                        class="w-28 block shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-xl py-3 px-5"
+                        min="0"
+                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
+                <div>
+                  <h3 class="text-lg leading-6 font-medium text-gray-900">
+                    Beds
+                  </h3>
+                </div>
+                <div class="space-y-6 sm:space-y-5">
+                  <div
+                    class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+                  >
+                    <label
+                      for="bedType"
+                      class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                    >
+                      Bed Type
+                    </label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                      <select
+                        formControlName="bedType"
+                        id="bedType"
+                        name="bedType"
+                        class="max-w-lg block focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-xl py-3 px-5"
+                      >
+                        <option *ngFor="let type of bedTypes" [ngValue]="type">
+                          {{ type }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+                  >
+                    <label
+                      for="bedUnits"
+                      class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                    >
+                      Number of Beds
+                    </label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                      <input
+                        formControlName="bedUnits"
+                        type="number"
+                        name="bedUnits"
+                        id="bedUnits"
+                        class="w-28 block shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-xl py-3 px-5"
+                        min="0"
+                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
+                <div>
+                  <h3 class="text-lg leading-6 font-medium text-gray-900">
+                    Photos
+                  </h3>
+                </div>
+                <div class="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
+                  <div
+                    class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+                  >
+                    <label
+                      for="cover-photo"
+                      class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                    >
+                      Cover photo
+                    </label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                      <div
+                        class="max-w-lg flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xl"
+                      >
+                        <div class="space-y-1 text-center">
+                          <svg
+                            class="mx-auto h-12 w-12 text-gray-400"
+                            stroke="currentColor"
+                            fill="none"
+                            viewBox="0 0 48 48"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                          <div
+                            class="flex text-sm text-gray-600 justify-center"
+                          >
+                            <label
+                              for="file-upload"
+                              class="relative cursor-pointer bg-white rounded-xl font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                            >
+                              <span>Upload a file</span>
+                              <input
+                                id="file-upload"
+                                name="file-upload"
+                                type="file"
+                                class="sr-only"
+                                (change)="onFileChange($event)"
+                                onchange="console.log(event.target.files)"
+                              />
+                            </label>
+                          </div>
+                          <p class="text-xs text-gray-500">
+                            PNG, JPG up to 10MB
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
+                <div>
+                  <h3 class="text-lg leading-6 font-medium text-gray-900">
+                    Description
+                  </h3>
+                </div>
+                <div class="space-y-6 sm:space-y-5">
+                  <div
+                    class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+                  >
+                    <label
+                      for="description"
+                      class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                    >
+                      Description
+                    </label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                      <textarea
+                        formControlName="roomDescription"
+                        id="description"
+                        name="description"
+                        rows="3"
+                        class="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-xl"
+                      ></textarea>
+                      <p class="mt-2 text-sm text-gray-500">
+                        Write a few sentences about the room.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-5">
+            <div class="flex justify-end">
+              <button
+                (click)="submit()"
+                type="submit"
+                class="ml-3 inline-flex justify-center border border-transparent shadow-sm text-sm font-medium rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 py-3 px-5"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<app-loader *ngIf="loading"></app-loader>

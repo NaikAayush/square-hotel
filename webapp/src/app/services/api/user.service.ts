@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from 'src/app/schema/user.schema';
+import { Rooms, User } from 'src/app/schema/user.schema';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,6 +12,12 @@ export class UserService {
   async createUser(user: User) {
     return await this.httpService
       .post(`${environment.apiUrl}/user`, user)
+      .toPromise();
+  }
+
+  async handleRoom(id: string, room: Rooms) {
+    return await this.httpService
+      .put(`${environment.apiUrl}/user/rooms/${id}`, room)
       .toPromise();
   }
 
