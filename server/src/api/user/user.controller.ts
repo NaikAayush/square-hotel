@@ -8,6 +8,7 @@ import {
   Put,
   Res,
 } from '@nestjs/common';
+import { ApiResponse, SearchAvailabilityResponse } from 'square';
 import { CreateUserDto, Rooms } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './user.schema';
@@ -54,6 +55,27 @@ export class UserController {
     @Param('id') uid: string,
     @Body() rooms: Rooms,
   ) {
+    const existingUser = await this.userService.updateRoom(uid, rooms);
+    return response.status(HttpStatus.OK).json({
+      message: 'Room has been successfully created',
+      existingUser,
+    });
+  }
+
+  @Get('/book/availability/:hotel/:start/:end')
+  async findAvailability(
+    @Res() response,
+    @Param('start') hotel: string,
+    @Param('start') start: string,
+    @Param('end') end: string,
+  ): Promise<ApiResponse<SearchAvailabilityResponse>> {
+    const data = await this.userService.findAvailability(start, end, hotel);
+    console.log(data);
+    return response.status(HttpStatus.OK).json(data);
+  }
+
+  @Post('/book/')
+  async book(@Res() response, @Param('id') uid: string, @Body() rooms: Rooms) {
     const existingUser = await this.userService.updateRoom(uid, rooms);
     return response.status(HttpStatus.OK).json({
       message: 'Room has been successfully created',

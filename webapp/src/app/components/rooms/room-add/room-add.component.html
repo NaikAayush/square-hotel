@@ -115,6 +115,41 @@
                       />
                     </div>
                   </div>
+                  <div
+                    class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+                  >
+                    <label
+                      for="price"
+                      class="block text-sm font-medium text-gray-700"
+                      >Price</label
+                    >
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                      <div
+                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                      >
+                        <span class="text-gray-500 sm:text-sm"> $ </span>
+                      </div>
+                      <input
+                        formControlName="roomPrice"
+                        type="text"
+                        name="price"
+                        id="price"
+                        class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md py-3 px-5"
+                        placeholder="0.00"
+                        aria-describedby="price-currency"
+                      />
+                      <div
+                        class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
+                      >
+                        <span
+                          class="text-gray-500 sm:text-sm"
+                          id="price-currency"
+                        >
+                          USD
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -179,7 +214,7 @@
                 </div>
                 <div class="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
                   <div
-                    class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+                    class="sm:grid sm:grid-cols-3 sm:gap-4 items-center sm:border-t sm:border-gray-200 sm:pt-5 grid-flow-row"
                   >
                     <label
                       for="cover-photo"
@@ -187,7 +222,7 @@
                     >
                       Cover photo
                     </label>
-                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                    <div class="mt-1 sm:mt-0 sm:col-span-1">
                       <div
                         class="max-w-lg flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xl"
                       >
@@ -220,7 +255,6 @@
                                 type="file"
                                 class="sr-only"
                                 (change)="onFileChange($event)"
-                                onchange="console.log(event.target.files)"
                               />
                             </label>
                           </div>
@@ -229,6 +263,9 @@
                           </p>
                         </div>
                       </div>
+                    </div>
+                    <div class="mt-1 sm:mt-0 sm:col-span-1">
+                      <img *ngIf="photo" [src]="photo" alt="" />
                     </div>
                   </div>
                 </div>

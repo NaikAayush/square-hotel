@@ -24,10 +24,12 @@ export class RoomAddComponent implements OnInit {
     bedUnits: new FormControl(1),
     roomCoverPhoto: new FormControl(''),
     roomDescription: new FormControl(''),
+    roomPrice: new FormControl(),
   });
   loading = false;
 
   bedTypes = ['King', 'Queen', 'Twin'];
+  photo: string | ArrayBuffer;
 
   constructor(
     public storeService: StoreService,
@@ -42,6 +44,11 @@ export class RoomAddComponent implements OnInit {
   onFileChange(event: any) {
     this.fileName = event.target.files[0].name;
     this.file = event.target.files[0];
+
+    const reader = new FileReader();
+    reader.onload = (e) => (this.photo = reader.result);
+
+    reader.readAsDataURL(this.file);
   }
 
   async submit() {
