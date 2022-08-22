@@ -31,6 +31,7 @@ export class OauthController {
         user,
       });
     } catch (err) {
+      console.log(err);
       return response.status(err.status).json(err.response);
     }
   }

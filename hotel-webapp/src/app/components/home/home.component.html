@@ -1,0 +1,60 @@
+<app-navbar></app-navbar>
+<div class="bg-[#F6F3E9]">
+  <div class="flex flex-row">
+    <div class="flex flex-col justify-center items-center w-1/2">
+      <span class="max-w-2xl text-5xl font-bold p-6 font-serif">
+        Luxury Hotels & Resorts around the World</span
+      >
+    </div>
+    <div class="w-1/2">
+      <img
+        src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+        alt=""
+      />
+    </div>
+  </div>
+  <div class="flex justify-center p-4 w-full">
+    <div
+      class="flex flex-row gap-4 justify-center items-start bg-white px-10 py-5 w-min rounded-3xl"
+    >
+      <mat-form-field appearance="fill">
+        <mat-label>Check-in and Check-out</mat-label>
+        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+          <input
+            matStartDate
+            formControlName="start"
+            placeholder="Start date"
+          />
+          <input matEndDate formControlName="end" placeholder="End date" />
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+
+        <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')"
+          >Invalid start date</mat-error
+        >
+        <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')"
+          >Invalid end date</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Number of people</mat-label>
+        <mat-select>
+          <mat-option value="one">1</mat-option>
+          <mat-option value="two">2</mat-option>
+          <mat-option value="three">3</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button
+        class="h-min w-max inline-flex justify-center items-center py-3 px-5 border border-transparent rounded-xl shadow-sm bg-indigo-600 hover:bg-indigo-700 text-sm font-medium text-white gap-4"
+      >
+        <span class="sr-only">Book Stay</span>
+        <span class="text-base font-semibold">Book Stay</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<p>Selected range: {{ range.value | json }}</p>

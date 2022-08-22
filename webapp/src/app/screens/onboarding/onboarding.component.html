@@ -96,14 +96,15 @@
             <span
               class="flex-1 inline-flex items-center px-3 rounded-r-xl border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-base font-semibold"
             >
-              .squarehotels.me
+              .square-hotel.pages.dev
             </span>
           </div>
 
           <div>
             <button
+              [disabled]="square_domain_configured == 'success'"
               (click)="saveDomain()"
-              class="inline-flex justify-center items-center py-3 px-5 border border-gray-300 rounded-xl shadow-sm text-sm font-medium gap-4 bg-indigo-600 hover:bg-indigo-700"
+              class="inline-flex justify-center items-center py-3 px-5 border border-gray-300 rounded-xl shadow-sm text-sm font-medium gap-4 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:hover:bg-indigo-600 disabled:cursor-not-allowed"
             >
               <span class="sr-only">Save</span>
               <span class="text-base font-semibold text-white">Save</span>

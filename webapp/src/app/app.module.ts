@@ -17,15 +17,15 @@ import { SuccessBadgeComponent } from './components/badge/success-badge/success-
 import { FailBadgeComponent } from './components/badge/fail-badge/fail-badge.component';
 import { WarningBadgeComponent } from './components/badge/warning-badge/warning-badge.component';
 import { BadgeComponent } from './components/badge/badge.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SidebarItemComponent } from './components/sidebar/sidebar-item/sidebar-item.component';
 import { RoomsComponent } from './screens/dashboard/rooms/rooms.component';
 import { OverviewComponent } from './screens/dashboard/overview/overview.component';
 import { AppTitleComponent } from './components/app-title/app-title.component';
-import { RoomItemComponent } from './components/room-item/room-item.component';
-import { RoomAddComponent } from './components/room-add/room-add.component';
+import { RoomItemComponent } from './components/rooms/room-item/room-item.component';
+import { RoomAddComponent } from './components/rooms/room-add/room-add.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +50,7 @@ import { RoomAddComponent } from './components/room-add/room-add.component';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),

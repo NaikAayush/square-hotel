@@ -30,6 +30,7 @@ export class AuthService {
         email: user.email !== null ? user.email : '',
         photoURL: user.photoURL !== null ? user.photoURL : '',
         displayName: user.displayName !== null ? user.displayName : '',
+        rooms: [],
       };
       this.loading = false;
       return await this.userService.createUser(data);
