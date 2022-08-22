@@ -11,6 +11,7 @@ export class CreateUserDto {
   hotelName?: string;
   domain?: string;
   rooms?: Array<Rooms>;
+  cookieToken?: string;
 }
 
 export interface Square {
@@ -28,4 +29,35 @@ export interface Rooms {
   bedUnits?: number;
   roomCoverPhoto?: string;
   roomDescription?: string;
+}
+
+export interface SquareRooms {
+  id: string;
+  itemData: {
+    description: string;
+    name: string;
+    productType: string;
+    variations: [
+      {
+        id: string;
+        itemVariationData: {
+          availableForBooking: boolean;
+          inventoryAlertType: string;
+          name: string;
+          priceMoney: {
+            amount: number;
+            currency: string;
+          };
+          pricingType: string;
+          serviceDuration: number;
+        };
+        presentAtAllLocations: boolean;
+        type: string;
+        teamMemberIds: Array<string>;
+        presentAtLocationIds: string;
+      },
+    ];
+  };
+  presentAtAllLocations: boolean;
+  type: string;
 }

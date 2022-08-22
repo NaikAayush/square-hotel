@@ -29,6 +29,9 @@ export class User {
 
   @Prop({ type: Object })
   rooms: Rooms;
+
+  @Prop()
+  cookieToken: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
