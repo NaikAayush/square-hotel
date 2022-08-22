@@ -29,6 +29,7 @@ export interface Rooms {
   bedUnits?: number;
   roomCoverPhoto?: string;
   roomDescription?: string;
+  roomPrice?: string;
 }
 
 export interface SquareRooms {

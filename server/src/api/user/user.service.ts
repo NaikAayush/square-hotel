@@ -92,10 +92,10 @@ export class UserService {
 
     this.squareClient = new Client({
       accessToken: user.square.accessToken,
-      environment: Environment.Production,
+      environment: Environment.Sandbox,
     });
-    const locationId = 'LDHRT8GQP075P';
-    const teamMemberId = 'TMnufxfypM6mRqG6';
+    const locationId = 'LE71ZKQP21GYA';
+    const teamMemberId = 'a6fze0j0ecfco4';
     const squareRoom: UpsertCatalogObjectRequest = {
       idempotencyKey: uuidv4(),
       object: {
@@ -110,7 +110,7 @@ export class UserService {
                 itemId: '#room',
                 name: rooms.roomName,
                 priceMoney: {
-                  amount: BigInt(100),
+                  amount: BigInt(rooms.roomPrice),
                   currency: 'USD',
                 },
                 pricingType: 'FIXED_PRICING',
@@ -146,5 +146,87 @@ export class UserService {
       throw new NotFoundException(`User #${id} not found`);
     }
     return existingUser;
+  }
+
+  async findAvailability(start: string, end: string, hotel: string) {
+    const users = await this.findAll();
+    const user = users.find((user) => (user.hotelName = hotel));
+
+    const squareClient = new Client({
+      accessToken: user.square.accessToken,
+      environment: Environment.Sandbox,
+    });
+
+    try {
+      const data = await squareClient.bookingsApi.searchAvailability({
+        query: {
+          filter: {
+            locationId: 'LE71ZKQP21GYA',
+            startAtRange: {
+              startAt: start,
+              endAt: end,
+            },
+            segmentFilters: [
+              {
+                serviceVariationId: 'ODUK56NBKRMHJOSTU74EBSYX',
+              },
+            ],
+          },
+        },
+      });
+      return data.body;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async createUser(name: string) {
+    const users = await this.findAll();
+    const user = users.find((user) => (user.hotelName = 'test-2'));
+
+    const squareClient = new Client({
+      accessToken: user.square.accessToken,
+      environment: Environment.Sandbox,
+    });
+
+    const res = await squareClient.customersApi.createCustomer({
+      givenName: name,
+    });
+    return res.result.customer.id;
+  }
+
+  async createBooking(name: string) {
+    const users = await this.findAll();
+    const user = users.find((user) => (user.hotelName = 'test-2'));
+
+    const squareClient = new Client({
+      accessToken: user.square.accessToken,
+      environment: Environment.Sandbox,
+    });
+
+    const userId = this.createUser(name);
+    console.log(userId);
+
+    try {
+      const data = await squareClient.bookingsApi.createBooking({
+        booking: {
+          customerId: 'AG31MWV1XM4F0HAZFHX787AGQ4',
+          locationId: 'LE71ZKQP21GYA',
+          appointmentSegments: [
+            {
+              teamMemberId: 'TM_HAmTYFBJM4iU0',
+              durationMinutes: 1320,
+              serviceVariationId: 'ODUK56NBKRMHJOSTU74EBSYX',
+              serviceVariationVersion: BigInt(1661170711778),
+            },
+          ],
+          startAt: '2022-08-26T20:00:00Z',
+        },
+        idempotencyKey: uuidv4(),
+      });
+      return data.body;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

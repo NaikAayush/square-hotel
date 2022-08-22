@@ -17,9 +17,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpClientModule } from '@angular/common/http';
+import { BookingFormComponent } from './components/booking-form/booking-form.component';
+import { BookingSuccessComponent } from './components/booking-success/booking-success.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NavbarComponent],
+  declarations: [AppComponent, HomeComponent, NavbarComponent, BookingFormComponent, BookingSuccessComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -34,6 +37,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatOptionModule,
     MatSelectModule,
     MatButtonModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
