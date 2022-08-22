@@ -6,11 +6,15 @@ import { CreateUserDto, Rooms, SquareRooms } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User, UserDocument } from './user.schema';
 import { v4 as uuidv4 } from 'uuid';
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class UserService {
   squareClient: Client;
-  constructor(@InjectModel(User.name) private UserModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private UserModel: Model<UserDocument>,
+    private http: HttpService,
+  ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const createdUser = new this.UserModel(createUserDto);
@@ -26,6 +30,43 @@ export class UserService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+    if (updateUserDto.domain) {
+      console.log(process.env.GIT_API_REF);
+      const listGitRef = await this.http
+        .get(process.env.GIT_API_REF, {
+          auth: {
+            username: process.env.GH_UNAME,
+            password: process.env.GH_PAT,
+          },
+        })
+        .toPromise();
+      const mainRef = listGitRef.data.find(
+        (element: any) => element.ref == 'refs/heads/main',
+      );
+      console.log(mainRef);
+      console.log(mainRef.ref);
+      console.log(mainRef.object.sha);
+      try {
+        const createBranch = await this.http
+          .post(
+            process.env.GIT_API_POST_REF,
+            {
+              ref: `refs/heads/${updateUserDto.domain}`,
+              sha: mainRef.object.sha,
+            },
+            {
+              auth: {
+                username: process.env.GH_UNAME,
+                password: process.env.GH_PAT,
+              },
+            },
+          )
+          .toPromise();
+        console.log(createBranch);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     const existingUser = await this.UserModel.findByIdAndUpdate(
       id,
       updateUserDto,
