@@ -26,6 +26,7 @@ const devEnvConfigFile = `export const environment = {
   SQ_ENVIRONMENT: '${process.env['SQ_ENVIRONMENT']}',
   SQ_APPLICATION_ID: '${process.env['SQ_APPLICATION_ID']}',
   apiUrl: '${process.env['apiUrl']}',
+  spacesConfig: ${process.env['spacesConfig']},
 };
 `;
 

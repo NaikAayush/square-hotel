@@ -14,6 +14,7 @@ env:
   SQ_APPLICATION_ID: ${{ secrets.SQ_APPLICATION_ID }}
   SQ_APPLICATION_SECRET: ${{ secrets.SQ_APPLICATION_SECRET }}
   SQ_ENVIRONMENT: ${{ secrets.SQ_ENVIRONMENT }}
+  spacesConfig: ${{ secrets.SPACESCONFIG }}
 
 jobs:
   build_and_deploy:
