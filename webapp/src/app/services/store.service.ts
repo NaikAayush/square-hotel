@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class StoreService {
   roomsAddScreenVisible = false;
+  toast = false;
 
   constructor() {}
 }

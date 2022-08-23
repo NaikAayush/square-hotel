@@ -61,8 +61,9 @@
           </div>
           <div>
             <button
+              [disabled]="square_hotel_name == 'success'"
               (click)="saveHotel()"
-              class="inline-flex justify-center items-center py-3 px-5 border border-gray-300 rounded-xl shadow-sm text-sm font-medium gap-4 bg-indigo-600 hover:bg-indigo-700"
+              class="inline-flex justify-center items-center py-3 px-5 border border-gray-300 rounded-xl shadow-sm text-sm font-medium gap-4 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:hover:bg-indigo-600 disabled:cursor-not-allowed"
             >
               <span class="sr-only">Save</span>
               <span class="text-base font-semibold text-white">Save</span>
@@ -90,11 +91,11 @@
               type="text"
               name="company-website"
               id="company-website"
-              class="min-w-0 w-full py-3 px-5 rounded-none rounded-l-xl focus:ring-indigo-500 focus:border-indigo-500 text-base border-gray-300 focus-within:z-10 font-medium"
+              class="min-w-0 py-3 px-5 w-full rounded-none rounded-l-xl focus:ring-indigo-500 focus:border-indigo-500 text-base border-gray-300 focus-within:z-10 font-medium"
               placeholder="thepearl"
             />
             <span
-              class="flex-1 inline-flex items-center px-3 rounded-r-xl border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-base font-semibold"
+              class="flex w-full items-center px-3 rounded-r-xl border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-base font-semibold"
             >
               .square-hotel.pages.dev
             </span>
@@ -131,4 +132,11 @@
     </div>
   </div>
 </div>
-<app-loader *ngIf="loading"></app-loader>
+<app-loader @openCloseAnimation *ngIf="loading"></app-loader>
+<app-toast
+  @openCloseAnimation
+  *ngIf="storeService.toast"
+  [success]="toastSuccess"
+  [title]="toastTitle"
+  [body]="toastBody"
+></app-toast>

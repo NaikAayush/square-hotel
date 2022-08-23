@@ -26,6 +26,7 @@ import { OverviewComponent } from './screens/dashboard/overview/overview.compone
 import { AppTitleComponent } from './components/app-title/app-title.component';
 import { RoomItemComponent } from './components/rooms/room-item/room-item.component';
 import { RoomAddComponent } from './components/rooms/room-add/room-add.component';
+import { ToastComponent } from './components/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { RoomAddComponent } from './components/rooms/room-add/room-add.component
     AppTitleComponent,
     RoomItemComponent,
     RoomAddComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,

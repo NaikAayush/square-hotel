@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { User } from 'src/app/schema/user.schema';
+import { openCloseAnimation } from 'src/app/services/animation.service';
 import { OauthService } from 'src/app/services/api/oauth.service';
 import { UserService } from 'src/app/services/api/user.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { StoreService } from 'src/app/services/store.service';
 import { environment } from 'src/environments/environment';
 import { Md5 } from 'ts-md5';
 
@@ -12,6 +14,7 @@ import { Md5 } from 'ts-md5';
   selector: 'app-onboarding',
   templateUrl: './onboarding.component.html',
   styleUrls: ['./onboarding.component.css'],
+  animations: [openCloseAnimation],
 })
 export class OnboardingComponent implements OnInit {
   url: string;
@@ -26,6 +29,9 @@ export class OnboardingComponent implements OnInit {
   domain = '';
   onboarded = false;
   uid: string;
+  toastTitle: string;
+  toastBody: string;
+  toastSuccess: boolean;
 
   constructor(
     private cookieService: CookieService,
@@ -33,7 +39,8 @@ export class OnboardingComponent implements OnInit {
     private route: ActivatedRoute,
     public authService: AuthService,
     private userService: UserService,
-    private oAuthService: OauthService
+    private oAuthService: OauthService,
+    public storeService: StoreService
   ) {
     const state = Md5.hashStr(Date.now().toString());
     this.url =
@@ -79,6 +86,9 @@ export class OnboardingComponent implements OnInit {
             });
             this.router.navigate(['onboarding']);
             this.ngOnInit();
+            this.storeService.toast = true;
+            this.toastSuccess = true;
+            this.toastTitle = 'Square account connected';
             this.loading = false;
           } else {
             this.loading = false;
@@ -107,6 +117,9 @@ export class OnboardingComponent implements OnInit {
     this.checkStatus(hotelRes['hotelName']);
     this.square_hotel_name = 'success';
     this.loading = false;
+    this.storeService.toast = true;
+    this.toastSuccess = true;
+    this.toastTitle = 'Hotel name updated';
     console.log(hotelRes);
   }
 
@@ -119,6 +132,9 @@ export class OnboardingComponent implements OnInit {
     );
     this.checkStatus(hotelRes['existingUser']);
     this.square_domain_configured = 'success';
+    this.storeService.toast = true;
+    this.toastSuccess = true;
+    this.toastTitle = 'Domain name updated';
     this.loading = false;
     console.log(hotelRes);
   }
