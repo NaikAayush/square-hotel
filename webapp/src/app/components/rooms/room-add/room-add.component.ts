@@ -17,14 +17,14 @@ export class RoomAddComponent implements OnInit {
   fileName = '';
   file: File;
   roomForm = new FormGroup({
-    roomName: new FormControl(''),
+    roomName: new FormControl('deluxe'),
     roomUnits: new FormControl(1),
     roomSize: new FormControl(250),
-    bedType: new FormControl(''),
+    bedType: new FormControl('King'),
     bedUnits: new FormControl(1),
-    roomCoverPhoto: new FormControl(''),
-    roomDescription: new FormControl(''),
-    roomPrice: new FormControl(),
+    roomCoverPhoto: new FormControl(),
+    roomDescription: new FormControl('la la'),
+    roomPrice: new FormControl(100 * 100),
   });
   loading = false;
 
@@ -63,7 +63,10 @@ export class RoomAddComponent implements OnInit {
     await this.spacesService.uploadObject(bucketParams);
     const fileURL = `${environment.spacesConfig.endpointWithSpace}/${this.fileName}`;
     console.log(fileURL);
-    this.roomForm.patchValue({ roomCoverPhoto: fileURL });
+    this.roomForm.patchValue({
+      roomCoverPhoto:
+        'https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370&q=80',
+    });
     console.log(this.roomForm);
     this.authService.afAuth.onAuthStateChanged(async (user) => {
       if (user) {

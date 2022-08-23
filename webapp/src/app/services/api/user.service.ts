@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Rooms, User } from 'src/app/schema/user.schema';
 import { environment } from 'src/environments/environment';
+import { Location } from 'square';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,12 @@ export class UserService {
   async getUser(id: string): Promise<User> {
     return await this.httpService
       .get<User>(`${environment.apiUrl}/user/${id}`)
+      .toPromise();
+  }
+
+  async getLocations(id: string): Promise<Location[]> {
+    return await this.httpService
+      .get<Location[]>(`${environment.apiUrl}/user/locations/${id}`)
       .toPromise();
   }
 }

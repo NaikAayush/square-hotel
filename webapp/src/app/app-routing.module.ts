@@ -10,6 +10,7 @@ import {
   redirectUnauthorizedTo,
 } from '@angular/fire/compat/auth-guard';
 import { RoomAddComponent } from './components/rooms/room-add/room-add.component';
+import { SettingsComponent } from './screens/dashboard/settings/settings.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
 
@@ -31,6 +32,7 @@ const routes: Routes = [
     children: [
       { path: 'overview', component: OverviewComponent },
       { path: 'rooms', component: RoomsComponent },
+      { path: 'settings', component: SettingsComponent },
     ],
   },
 ];
