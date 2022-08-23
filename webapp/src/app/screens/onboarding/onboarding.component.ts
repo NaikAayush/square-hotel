@@ -66,7 +66,6 @@ export class OnboardingComponent implements OnInit {
         }
         this.checkStatus(userData);
 
-        this.loading = false;
         this.route.queryParams.subscribe(async (params) => {
           console.log(params);
           this.code = params['code'];
@@ -79,6 +78,10 @@ export class OnboardingComponent implements OnInit {
               response_type: params['response_type'],
             });
             this.router.navigate(['onboarding']);
+            this.ngOnInit();
+            this.loading = false;
+          } else {
+            this.loading = false;
           }
         });
       } else {
