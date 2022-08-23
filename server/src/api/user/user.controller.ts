@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiResponse,
+  Availability,
   Location,
   SearchAvailabilityResponse,
   TeamMember,
@@ -65,6 +66,14 @@ export class UserController {
     return await this.userService.getTeamMembers(id);
   }
 
+  @Get('/getRoomByID/:hotel/:id')
+  async getRoomById(
+    @Param('hotel') hotel: string,
+    @Param('id') id: string,
+  ): Promise<any> {
+    return await this.userService.getRoomById(id, hotel);
+  }
+
   @Put('/rooms/:id')
   async handleRoom(
     @Res() response,
@@ -92,10 +101,23 @@ export class UserController {
     @Param('start') hotel: string,
     @Param('start') start: string,
     @Param('end') end: string,
-  ): Promise<ApiResponse<SearchAvailabilityResponse>> {
-    const data = await this.userService.findAvailability(start, end, hotel);
+  ): Promise<{ data: any }> {
+    const data: any = await this.userService.findAvailability(
+      start,
+      end,
+      hotel,
+    );
     console.log(data);
-    return response.status(HttpStatus.OK).json(data);
+    return response.status(HttpStatus.OK).send({ data: this.toObject(data) });
+  }
+
+  toObject(data: any) {
+    return JSON.parse(
+      JSON.stringify(
+        data,
+        (key, value) => (typeof value === 'bigint' ? value.toString() : value), // return everything else unchanged
+      ),
+    );
   }
 
   @Post('/book/')

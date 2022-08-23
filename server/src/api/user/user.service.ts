@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
+  Availability,
   Client,
   Environment,
   Location,
@@ -152,6 +153,14 @@ export class UserService {
     }
   }
 
+  async getRoomById(roomId: string, hotel: string) {
+    const users = await this.findAll();
+    const user = users.find((user) => (user.hotelName = hotel));
+
+    const room = user.rooms.find((room) => (room.id = roomId));
+    return room;
+  }
+
   async updateRoom(
     id: string,
     rooms: Rooms,
@@ -236,27 +245,35 @@ export class UserService {
       environment: Environment.Sandbox,
     });
 
-    try {
-      const data = await squareClient.bookingsApi.searchAvailability({
-        query: {
-          filter: {
-            locationId: 'LE71ZKQP21GYA',
-            startAtRange: {
-              startAt: start,
-              endAt: end,
-            },
-            segmentFilters: [
-              {
-                serviceVariationId: 'ODUK56NBKRMHJOSTU74EBSYX',
+    const availabilityArray: Availability[][] = [];
+    const availability = {};
+
+    for (let i = 0; i < user.rooms.length; i++) {
+      try {
+        const data = await squareClient.bookingsApi.searchAvailability({
+          query: {
+            filter: {
+              locationId: user.locationId,
+              startAtRange: {
+                startAt: start,
+                endAt: end,
               },
-            ],
+              segmentFilters: [
+                {
+                  serviceVariationId: user.rooms[i].id,
+                },
+              ],
+            },
           },
-        },
-      });
-      return data.body;
-    } catch (error) {
-      console.log(error);
+        });
+        availability[user.rooms[i].id] = data.result.availabilities;
+        availabilityArray.push(data.result.availabilities);
+      } catch (error) {
+        console.log(error);
+      }
     }
+    console.log(availability);
+    return availability;
   }
 
   async createUser(name: string) {
