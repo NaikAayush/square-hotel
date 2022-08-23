@@ -1,32 +1,5 @@
-<div class="h-full overflow-y-scroll">
-  <div
-    class="flex flex-col w-full items-center justify-center bg-gray-100 rounded-r-3xl gap-4 p-12"
-  >
-    <div
-      class="flex flex-row w-full max-w-5xl bg-white p-12 rounded-3xl items-center"
-    >
-      <div class="flex flex-col w-full gap-4">
-        <span class="block text-3xl font-bold text-gray-900">
-          Re-connect your Square Account
-        </span>
-        <span class="text-lg font-medium text-gray-600">
-          Login to your square account with your credentials and link it to
-          Square Hotels.
-        </span>
-        <div>
-          <a
-            class="inline-flex justify-center items-center py-3 px-5 border border-gray-300 rounded-xl shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 gap-4"
-          >
-            <span class="sr-only">Continue with Square</span>
-            <img class="w-5 h-5" src="assets/logos/square-black.svg" alt="" />
-            <span class="text-base font-semibold text-gray-700"
-              >Re Auth with Square</span
-            >
-          </a>
-        </div>
-      </div>
-    </div>
-
+<div class="flex flex-col h-full overflow-hidden">
+  <div class="flex flex-col min-h-0 overflow-y-scroll gap-4 items-center">
     <div
       class="flex flex-row w-full max-w-5xl bg-white p-12 rounded-3xl items-center gap-24"
     >
@@ -66,6 +39,30 @@
     </div>
 
     <div
+      class="flex flex-row w-full max-w-5xl bg-white p-12 rounded-3xl items-center"
+    >
+      <div class="flex flex-col w-full gap-4">
+        <span class="block text-3xl font-bold text-gray-900">
+          Re-connect your Square Account
+        </span>
+        <span class="text-lg font-medium text-gray-600">
+          Login to your square account with your credentials and link it to
+          Square Hotels.
+        </span>
+        <div>
+          <a
+            class="inline-flex justify-center items-center py-3 px-5 border border-gray-300 rounded-xl shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 gap-4"
+          >
+            <img class="w-5 h-5" src="assets/logos/square-black.svg" alt="" />
+            <span class="text-base font-semibold text-gray-700"
+              >Re Auth with Square</span
+            >
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div
       *ngIf="!loading"
       class="flex flex-col w-full max-w-5xl bg-white p-12 rounded-3xl items-center gap-4"
     >
@@ -94,7 +91,6 @@
             (click)="saveLocation()"
             class="inline-flex justify-center items-center py-3 px-5 border border-gray-300 rounded-xl shadow-sm text-sm font-medium gap-4 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:hover:bg-indigo-600 disabled:cursor-not-allowed"
           >
-            <span class="sr-only">Save</span>
             <span class="text-base font-semibold text-white">Save</span>
           </button>
         </div>
@@ -134,6 +130,53 @@
             </dd>
           </div>
         </dl>
+      </div>
+    </div>
+
+    <div
+      class="flex flex-row w-full max-w-5xl bg-white p-12 rounded-3xl items-center"
+    >
+      <div class="flex flex-col w-full gap-4">
+        <span class="block text-3xl font-bold text-gray-900">
+          Team Members
+        </span>
+        <span class="text-lg font-medium text-gray-600">
+          Select Team Members
+        </span>
+        <div>
+          <div class="mt-4 sm:mt-0 sm:col-span-2">
+            <div class="max-w-lg space-y-4">
+              <div
+                *ngFor="let member of teamList"
+                class="relative flex items-start"
+              >
+                <div class="flex items-center h-5">
+                  <input
+                    [checked]="selectedTeamList.includes(member.id)"
+                    (change)="onChange(member.id)"
+                    id="comments"
+                    name="comments"
+                    type="checkbox"
+                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                  />
+                </div>
+                <div class="ml-3 text-sm">
+                  <label for="comments" class="font-medium text-gray-700">{{
+                    member.givenName + member.familyName
+                  }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button
+            (click)="saveTeam()"
+            class="inline-flex justify-center items-center py-3 px-5 border border-gray-300 rounded-xl shadow-sm text-sm font-medium gap-4 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:hover:bg-indigo-600 disabled:cursor-not-allowed"
+          >
+            <span class="text-base font-semibold text-white">Save</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -7,6 +7,9 @@ export interface User {
   hotelName?: string;
   domain?: string;
   rooms?: Array<Rooms>;
+  cookieToken?: string;
+  locationId?: string;
+  teamArray?: string[];
 }
 
 export interface Square {
