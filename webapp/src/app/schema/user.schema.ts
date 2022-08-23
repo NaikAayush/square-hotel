@@ -20,6 +20,8 @@ export interface Square {
 }
 
 export interface Rooms {
+  id?: string;
+  itemId?: string;
   roomName?: string;
   roomUnits?: number;
   roomSize?: number;
@@ -27,4 +29,5 @@ export interface Rooms {
   bedUnits?: number;
   roomCoverPhoto?: string;
   roomDescription?: string;
+  roomPrice?: number;
 }

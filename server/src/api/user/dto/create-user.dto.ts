@@ -12,6 +12,8 @@ export class CreateUserDto {
   domain?: string;
   rooms?: Array<Rooms>;
   cookieToken?: string;
+  locationId?: string;
+  teamArray?: string[];
 }
 
 export interface Square {
@@ -22,6 +24,8 @@ export interface Square {
 }
 
 export interface Rooms {
+  id?: string;
+  itemId?: string;
   roomName?: string;
   roomUnits?: number;
   roomSize?: number;
@@ -29,7 +33,7 @@ export interface Rooms {
   bedUnits?: number;
   roomCoverPhoto?: string;
   roomDescription?: string;
-  roomPrice?: string;
+  roomPrice?: number;
 }
 
 export interface SquareRooms {

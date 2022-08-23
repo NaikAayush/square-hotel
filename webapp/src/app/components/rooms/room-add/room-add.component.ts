@@ -24,7 +24,7 @@ export class RoomAddComponent implements OnInit {
     bedUnits: new FormControl(1),
     roomCoverPhoto: new FormControl(),
     roomDescription: new FormControl('la la'),
-    roomPrice: new FormControl(100 * 100),
+    roomPrice: new FormControl(100),
   });
   loading = false;
 
@@ -53,6 +53,7 @@ export class RoomAddComponent implements OnInit {
 
   async submit() {
     this.loading = true;
+    this.storeService.roomsHandleLoading = true;
     console.log(this.roomForm.value);
     const bucketParams = {
       Bucket: 'square-hotel',
@@ -71,10 +72,15 @@ export class RoomAddComponent implements OnInit {
     this.authService.afAuth.onAuthStateChanged(async (user) => {
       if (user) {
         await this.userService.handleRoom(user.uid, this.roomForm.value);
+        this.storeService.roomsHandleSuccess = true;
+        this.storeService.roomsHandleTitle = 'Room Added';
+        this.storeService.toast = true;
+        this.room.ngOnInit();
+        this.storeService.roomsHandleLoading = false;
+        this.loading = false;
+        this.storeService.roomsAddScreenVisible = false;
       }
     });
     this.loading = false;
-    this.room.ngOnInit();
-    this.storeService.roomsAddScreenVisible = false;
   }
 }

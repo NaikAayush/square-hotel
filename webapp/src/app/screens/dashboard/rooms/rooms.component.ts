@@ -13,6 +13,7 @@ import { StoreService } from 'src/app/services/store.service';
 })
 export class RoomsComponent implements OnInit {
   user: User;
+  uid: string;
   constructor(
     public storeService: StoreService,
     private authService: AuthService,
@@ -21,6 +22,7 @@ export class RoomsComponent implements OnInit {
 
   ngOnInit() {
     this.authService.afAuth.onAuthStateChanged(async (user) => {
+      this.uid = user.uid;
       if (user) {
         this.user = await this.userService.getUser(user.uid);
       }

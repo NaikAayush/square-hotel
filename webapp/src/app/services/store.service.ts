@@ -5,6 +5,11 @@ import { Injectable } from '@angular/core';
 })
 export class StoreService {
   roomsAddScreenVisible = false;
+  roomsHandleSuccess: boolean;
+  roomsHandleTitle = '';
+  roomsHandleBody = '';
+  roomsHandleLoading = false;
+
   toast = false;
 
   constructor() {}

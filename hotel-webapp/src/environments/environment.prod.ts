@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrlL: 'https://square-hotel-server-nbyzf.ondigitalocean.app',
+  apiUrl: 'https://square-hotel-server-nbyzf.ondigitalocean.app',
 };

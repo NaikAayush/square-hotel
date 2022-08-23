@@ -2,7 +2,7 @@
 
 <div class="flex flex-row gap-10 pt-4 w-full flex-wrap justify-evenly">
   <div class="flex flex-row flex-wrap" *ngFor="let room of user?.rooms">
-    <app-room-item [room]="room"></app-room-item>
+    <app-room-item [room]="room" [uid]="uid"></app-room-item>
   </div>
 
   <button
@@ -34,3 +34,13 @@
   [@openCloseAnimation]="storeService.roomsAddScreenVisible"
   *ngIf="storeService.roomsAddScreenVisible"
 ></app-room-add>
+
+<app-toast
+  @openCloseAnimation
+  *ngIf="storeService.toast"
+  [success]="storeService.roomsHandleSuccess"
+  [title]="storeService.roomsHandleTitle"
+  [body]="storeService.roomsHandleBody"
+></app-toast>
+
+<app-loader *ngIf="storeService.roomsHandleLoading"> </app-loader>

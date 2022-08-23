@@ -45,4 +45,15 @@ export class UserService {
       .get<TeamMember[]>(`${environment.apiUrl}/user/team/${id}`)
       .toPromise();
   }
+
+  async deleteRoom(
+    id: string,
+    roomItemId: string
+  ): Promise<{ message: string }> {
+    return await this.httpService
+      .delete<{ message: string }>(
+        `${environment.apiUrl}/user/rooms/${id}/${roomItemId}`
+      )
+      .toPromise();
+  }
 }

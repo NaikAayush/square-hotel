@@ -27,11 +27,17 @@ export class User {
   @Prop()
   domain: string;
 
-  @Prop({ type: Object })
-  rooms: Rooms;
+  @Prop()
+  rooms: Rooms[];
 
   @Prop()
   cookieToken: string;
+
+  @Prop()
+  locationId: string;
+
+  @Prop()
+  teamArray: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

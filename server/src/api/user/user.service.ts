@@ -1,7 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Client, Environment, UpsertCatalogObjectRequest } from 'square';
+import {
+  Client,
+  Environment,
+  Location,
+  TeamMember,
+  UpsertCatalogObjectRequest,
+} from 'square';
 import { CreateUserDto, Rooms, SquareRooms } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User, UserDocument } from './user.schema';
@@ -27,6 +33,43 @@ export class UserService {
 
   async findOne(id: string): Promise<User> {
     return await this.UserModel.findById(id).exec();
+  }
+
+  async getLocations(id: string): Promise<Location[]> {
+    const user = await this.findOne(id);
+
+    this.squareClient = new Client({
+      accessToken: user.square.accessToken,
+      environment: Environment.Sandbox,
+    });
+
+    try {
+      const locationArray = (
+        await this.squareClient.locationsApi.listLocations()
+      ).result.locations;
+      console.log(locationArray);
+      return locationArray;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async getTeamMembers(id: string): Promise<TeamMember[]> {
+    const user = await this.findOne(id);
+
+    this.squareClient = new Client({
+      accessToken: user.square.accessToken,
+      environment: Environment.Sandbox,
+    });
+
+    try {
+      const locationArray = (
+        await this.squareClient.teamApi.searchTeamMembers({})
+      ).result.teamMembers;
+      console.log(locationArray);
+      return locationArray;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
@@ -87,15 +130,47 @@ export class UserService {
   //   squareClient.teamApi.
   // }
 
-  async updateRoom(id: string, rooms: Rooms): Promise<User> {
+  async deleteRoom(uid: string, roomItemId: string) {
+    const user = await this.findOne(uid);
+
+    const squareClient = new Client({
+      accessToken: user.square.accessToken,
+      environment: Environment.Sandbox,
+    });
+
+    try {
+      await squareClient.catalogApi.deleteCatalogObject(roomItemId);
+      user.rooms = user.rooms.filter((room) => room.itemId != roomItemId);
+      console.log(user.rooms);
+      const existingUser = await this.UserModel.findByIdAndUpdate(uid, {
+        rooms: user.rooms,
+      });
+      return { message: 'deleted' };
+    } catch (error) {
+      console.log(error);
+      return { message: 'failed' };
+    }
+  }
+
+  async updateRoom(
+    id: string,
+    rooms: Rooms,
+  ): Promise<{ message: string; data?: User }> {
     const user = await this.findOne(id);
 
     this.squareClient = new Client({
       accessToken: user.square.accessToken,
       environment: Environment.Sandbox,
     });
-    const locationId = 'LE71ZKQP21GYA';
-    const teamMemberId = 'a6fze0j0ecfco4';
+
+    try {
+      const locations = await (
+        await this.squareClient.locationsApi.listLocations()
+      ).result.locations;
+      console.log(locations);
+    } catch (error) {
+      console.log(error);
+    }
     const squareRoom: UpsertCatalogObjectRequest = {
       idempotencyKey: uuidv4(),
       object: {
@@ -110,19 +185,19 @@ export class UserService {
                 itemId: '#room',
                 name: rooms.roomName,
                 priceMoney: {
-                  amount: BigInt(rooms.roomPrice),
+                  amount: BigInt(rooms.roomPrice * 100),
                   currency: 'USD',
                 },
                 pricingType: 'FIXED_PRICING',
                 sellable: true,
                 serviceDuration: BigInt(79200000),
                 inventoryAlertType: 'NONE',
-                teamMemberIds: [teamMemberId],
+                teamMemberIds: user.teamArray,
               },
               id: '#something',
               presentAtAllLocations: true,
               type: 'ITEM_VARIATION',
-              presentAtLocationIds: [locationId],
+              presentAtLocationIds: [user.locationId],
             },
           ],
           description: rooms.roomDescription,
@@ -133,19 +208,23 @@ export class UserService {
       },
     };
     try {
-      await this.squareClient.catalogApi.upsertCatalogObject(squareRoom);
+      const squareRoomData =
+        await this.squareClient.catalogApi.upsertCatalogObject(squareRoom);
+      rooms.itemId = squareRoomData.result.catalogObject.id;
+      rooms.id = squareRoomData.result.catalogObject.itemData.variations[0].id;
+      const existingUser = await this.UserModel.findByIdAndUpdate(
+        id,
+        { $push: { rooms: rooms } },
+        { safe: true, upsert: true },
+      );
+      if (!existingUser) {
+        throw new NotFoundException(`User #${id} not found`);
+      }
+      return { message: 'Success', data: existingUser };
     } catch (error) {
       console.log(error);
+      return { message: 'Fail' };
     }
-    const existingUser = await this.UserModel.findByIdAndUpdate(
-      id,
-      { $push: { rooms: rooms } },
-      { safe: true, upsert: true },
-    );
-    if (!existingUser) {
-      throw new NotFoundException(`User #${id} not found`);
-    }
-    return existingUser;
   }
 
   async findAvailability(start: string, end: string, hotel: string) {

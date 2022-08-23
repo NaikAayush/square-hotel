@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpStatus,
   Param,
@@ -8,7 +9,12 @@ import {
   Put,
   Res,
 } from '@nestjs/common';
-import { ApiResponse, SearchAvailabilityResponse } from 'square';
+import {
+  ApiResponse,
+  Location,
+  SearchAvailabilityResponse,
+  TeamMember,
+} from 'square';
 import { CreateUserDto, Rooms } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './user.schema';
@@ -49,17 +55,35 @@ export class UserController {
     }
   }
 
+  @Get('/locations/:id')
+  async getLocations(@Param('id') id: string): Promise<Location[]> {
+    return await this.userService.getLocations(id);
+  }
+
+  @Get('/team/:id')
+  async getTeamMembers(@Param('id') id: string): Promise<TeamMember[]> {
+    return await this.userService.getTeamMembers(id);
+  }
+
   @Put('/rooms/:id')
   async handleRoom(
     @Res() response,
     @Param('id') uid: string,
     @Body() rooms: Rooms,
   ) {
-    const existingUser = await this.userService.updateRoom(uid, rooms);
-    return response.status(HttpStatus.OK).json({
-      message: 'Room has been successfully created',
-      existingUser,
-    });
+    const data = await this.userService.updateRoom(uid, rooms);
+    return response.status(HttpStatus.OK).json(data);
+  }
+
+  @Delete('/rooms/:id/:roomItemId')
+  async deleteRoom(
+    @Res() response,
+    @Param('id') uid: string,
+    @Param('roomItemId') roomItemId: string,
+    @Body() rooms: Rooms,
+  ) {
+    const data = await this.userService.deleteRoom(uid, roomItemId);
+    return response.status(HttpStatus.OK).json(data);
   }
 
   @Get('/book/availability/:hotel/:start/:end')
